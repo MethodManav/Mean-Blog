@@ -3,12 +3,43 @@ import userService from "../services/user.service";
 
 class UserController {
   async signUp(c: Context) {
-    const env = c.env.DATABASE_URL;
-    const body = await c.req.json();
-    const data = await userService.createUser(env, body);
-    return c.json({
-      message: data,
-    });
+    try {
+      const { DATABASE_URL } = c.env;
+      const body = await c.req.json();
+      const UserExist = await userService.getUserByEmail(
+        DATABASE_URL,
+        body.email
+      );
+      if (UserExist) {
+        return c.json(
+          {
+            message: "User Already Exists",
+          },
+          404
+        );
+      }
+
+      const userCreate = await userService.createUser(DATABASE_URL, body);
+      if (userCreate) {
+        return c.json(
+          {
+            message: "User Created Successfully",
+            success: true,
+          },
+          201
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      return c.json(
+        {
+          success: "false",
+          Message: "Something Went Wrong",
+          error: error,
+        },
+        500
+      );
+    }
   }
 }
 

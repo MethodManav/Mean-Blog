@@ -12,9 +12,26 @@ class UserService {
           password: user.password,
         },
       });
-      return userdata;
+      return true;
     } catch (error) {
       console.log(error);
+      return false;
+    }
+  }
+  async getUserByEmail(url: string, email: string) {
+    const prismaClient = client(url);
+    try {
+      const existUser = await prismaClient.user.findUnique({
+        where: {
+          email: email,
+        },
+      });
+      if (existUser) {
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
     }
   }
 }
