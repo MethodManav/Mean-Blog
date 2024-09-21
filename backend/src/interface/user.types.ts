@@ -1,6 +1,6 @@
 export interface createUser {
+  id: unknown;
   email: string;
   name: string;
   password: string;
-  blogs: string[];
 }

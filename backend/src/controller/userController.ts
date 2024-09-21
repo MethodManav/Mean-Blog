@@ -1,10 +1,11 @@
 import { Context } from "hono";
 import userService from "../services/user.service";
+import { sign } from "hono/jwt";
 
 class UserController {
   async signUp(c: Context) {
     try {
-      const { DATABASE_URL } = c.env;
+      const { DATABASE_URL, JWT } = c.env;
       const body = await c.req.json();
       const UserExist = await userService.getUserByEmail(
         DATABASE_URL,
@@ -19,12 +20,19 @@ class UserController {
         );
       }
 
-      const userCreate = await userService.createUser(DATABASE_URL, body);
+      let userCreate = await userService.createUser(DATABASE_URL, body);
       if (userCreate) {
+        const token = await sign(
+          {
+            id: userCreate.id,
+          },
+          JWT
+        );
         return c.json(
           {
             message: "User Created Successfully",
             success: true,
+            token: token,
           },
           201
         );

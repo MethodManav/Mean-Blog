@@ -2,7 +2,7 @@ import { client } from "../database/prismaClient";
 import { createUser } from "../interface/user.types";
 
 class UserService {
-  async createUser(url: string, user: createUser) {
+  async createUser(url: string, user: createUser): Promise<any> {
     const prismaClient = client(url);
     try {
       const userdata = await prismaClient.user.create({
@@ -12,10 +12,10 @@ class UserService {
           password: user.password,
         },
       });
-      return true;
+      return userdata;
     } catch (error) {
       console.log(error);
-      return false;
+      return error;
     }
   }
   async getUserByEmail(url: string, email: string) {
@@ -27,11 +27,11 @@ class UserService {
         },
       });
       if (existUser) {
-        return true;
+        return existUser;
       }
     } catch (error) {
       console.log(error);
-      return false;
+      return error;
     }
   }
 }
