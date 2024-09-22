@@ -7,5 +7,6 @@ const blogRouter = new Hono<{ Bindings: Bindings }>();
 
 // blogRouter.use("/*", authMiddleware.authUser);
 blogRouter.post("/post", blogController.createBlog);
+blogRouter.put("/:id", blogController.UpdatBlog);
 
 export { blogRouter };
