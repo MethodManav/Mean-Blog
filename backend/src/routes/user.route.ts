@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import userController from "../controller/user.controller";
-import { Bindings } from "../interface/Types";
+import { Bindings, Variables } from "../interface/Types";
 
-const userRouter = new Hono<{ Bindings: Bindings }>();
+const userRouter = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
 userRouter.post("/signup", userController.signUp);
 

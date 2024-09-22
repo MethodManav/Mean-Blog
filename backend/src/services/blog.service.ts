@@ -22,7 +22,7 @@ class BlogService {
   async updateByID(url: string, blogData: UpdateBlog, id: number) {
     const prismaClient = client(url);
     try {
-      const blogCreate = await prismaClient.blogs.update({
+      const blog = await prismaClient.blogs.update({
         where: {
           id: id,
         },
@@ -32,7 +32,36 @@ class BlogService {
           published: blogData.published,
         },
       });
-      return blogCreate;
+      return blog;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+
+  async getById(url: string, id: number) {
+    const prismaClient = client(url);
+    try {
+      const blog = await prismaClient.blogs.findFirst({
+        where: {
+          id: id,
+        },
+      });
+      return blog;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+
+  async getAll(url: string, page: number) {
+    const prismaClient = client(url);
+    try {
+      const allBlog = await prismaClient.blogs.findMany({
+        skip: (page - 1) * 10,
+        take: 10,
+      });
+      return allBlog;
     } catch (error) {
       console.log(error);
       return error;
