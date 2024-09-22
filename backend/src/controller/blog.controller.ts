@@ -17,7 +17,10 @@ class BlogController {
           201
         );
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      console.log(error);
+    }
   }
 }
 
