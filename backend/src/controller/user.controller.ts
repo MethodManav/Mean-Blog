@@ -1,26 +1,24 @@
 import { Context } from "hono";
 import userService from "../services/user.service";
 import { sign } from "hono/jwt";
+import userManager from "../manager/user.manager";
+import { SendResponse } from "../utilies/sendResponse";
+import { HTTPException } from "hono/http-exception";
 
 class UserController {
   async signUp(c: Context) {
     try {
       const { DATABASE_URL, JWT } = c.env;
       const body = await c.req.json();
-      const UserExist = await userService.getUserByEmail(
-        DATABASE_URL,
-        body.email
-      );
-      if (UserExist) {
-        return c.json(
-          {
-            message: "User Already Exists",
-          },
-          404
-        );
+      const user = await userManager.getUserByEmail(DATABASE_URL, body.email);
+      if (user) {
+        return SendResponse(c, 404, {
+          success: false,
+          data: {},
+          message: "User Already Exists",
+        });
       }
-
-      let userCreate = await userService.createUser(DATABASE_URL, body);
+      const userCreate = await userManager.createUser(DATABASE_URL, body);
       if (userCreate) {
         const token = await sign(
           {
@@ -38,15 +36,13 @@ class UserController {
         );
       }
     } catch (error) {
-      console.log(error);
-      return c.json(
-        {
-          success: "false",
-          Message: "Something Went Wrong",
-          error: error,
-        },
-        500
-      );
+      if (error instanceof HTTPException) {
+        const statusCode = error.status;
+        const errorMessage = error.message || "Internal Server Error";
+        throw new HTTPException(statusCode, { message: errorMessage });
+      } else {
+        throw new HTTPException(500, { message: "Unknown error occurred" });
+      }
     }
   }
 }
