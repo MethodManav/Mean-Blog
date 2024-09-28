@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import { InputField } from "./InputField";
+import { useState } from "react";
+import { Button } from "./Button";
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
+  const [postInput, setPostInput] = useState<any>({
+    email: "",
+    username: "",
+    password: "",
+  });
   return (
     <div className="h-screen flex justify-center flex-col">
       <div className="flex justify-center">
@@ -13,15 +20,37 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
               Login
             </Link>
           </div>
-          <InputField label="UserName" placeholder="Enter Your UserName" />
-          <InputField label="Email" placeholder="Enter Your Email " />
-          <InputField label="Password" placeholder="Enter Your Password" />
-          <button
-            type="button"
-            className=" w-full mt-7 text-white bg-black hover:bg-black font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-          >
-            Sign Up
-          </button>
+          <InputField
+            label="UserName"
+            placeholder="Enter Your UserName"
+            onChange={(e) =>
+              setPostInput({
+                ...postInput,
+                username: e.target.value,
+              })
+            }
+          />
+          <InputField
+            label="Email"
+            placeholder="Enter Your Email "
+            onChange={(e) =>
+              setPostInput({
+                ...postInput,
+                email: e.target.value,
+              })
+            }
+          />
+          <InputField
+            label="Password"
+            placeholder="Enter Your Password"
+            onChange={(e) =>
+              setPostInput({
+                ...postInput,
+                password: e.target.value,
+              })
+            }
+          />
+          <Button type="signup" />
         </div>
       </div>
     </div>
