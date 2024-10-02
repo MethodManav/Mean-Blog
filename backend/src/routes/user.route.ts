@@ -5,5 +5,6 @@ import { Bindings, Variables } from "../interface/Types";
 const userRouter = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
 userRouter.post("/signup", userController.signUp);
+userRouter.post("/signin", userController.signIn);
 
 export { userRouter };

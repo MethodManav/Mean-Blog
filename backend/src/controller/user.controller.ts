@@ -45,6 +45,34 @@ class UserController {
       }
     }
   }
+
+  async signIn(c: Context) {
+    try {
+      const { DATABASE_URL, JWT } = c.env;
+      const body = await c.req.json();
+      const user = await userManager.getUserByEmail(DATABASE_URL, body.email);
+      if (!user) {
+        return SendResponse(c, 404, {
+          success: false,
+          data: {},
+          message: "User Does Not  Exists",
+        });
+      }
+      return SendResponse(c, 201, {
+        success: true,
+        data: user,
+        message: `User Signin Successfully`,
+      });
+    } catch (error) {
+      if (error instanceof HTTPException) {
+        const statusCode = error.status;
+        const errorMessage = error.message || "Internal Server Error";
+        throw new HTTPException(statusCode, { message: errorMessage });
+      } else {
+        throw new HTTPException(500, { message: "Unknown error occurred" });
+      }
+    }
+  }
 }
 
 export default new UserController();
