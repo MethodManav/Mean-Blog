@@ -1,6 +1,8 @@
 import { Context } from "hono";
 import { createBlogs, UpdateBlog } from "../interface/blog.types";
 import blogService from "../services/blog.service";
+import { SendResponse } from "../utilies/sendResponse";
+import { HTTPException } from "hono/http-exception";
 
 class BlogController {
   async createBlog(c: Context) {
@@ -12,16 +14,20 @@ class BlogController {
     try {
       const blog = await blogService.create(DATABASE_URL, body);
       if (blog) {
-        return c.json(
-          {
-            message: "Blog Created Successfully",
-            success: true,
-          },
-          201
-        );
+        return SendResponse(c, 201, {
+          data: blog,
+          success: true,
+          message: "Blog Created Successfully",
+        });
       }
     } catch (error) {
-      console.log(error);
+      if (error instanceof HTTPException) {
+        const statusCode = error.status;
+        const errorMessage = error.message || "Internal Server Error";
+        throw new HTTPException(statusCode, { message: errorMessage });
+      } else {
+        throw new HTTPException(500, { message: "Unknown error occurred" });
+      }
     }
   }
 
@@ -55,17 +61,20 @@ class BlogController {
     try {
       const blog = await blogService.getById(DATABASE_URL, parseInt(id));
       if (blog) {
-        return c.json(
-          {
-            message: "Blog Find Successfully",
-            success: true,
-            data: blog,
-          },
-          201
-        );
+        return SendResponse(c, 201, {
+          message: "Blog Find Successfully",
+          success: true,
+          data: blog,
+        });
       }
     } catch (error) {
-      console.log(error);
+      if (error instanceof HTTPException) {
+        const statusCode = error.status;
+        const errorMessage = error.message || "Internal Server Error";
+        throw new HTTPException(statusCode, { message: errorMessage });
+      } else {
+        throw new HTTPException(500, { message: "Unknown error occurred" });
+      }
     }
   }
 
