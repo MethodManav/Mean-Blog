@@ -2,17 +2,21 @@ import { HTTPException } from "hono/http-exception";
 import { client } from "../database/prismaClient";
 import { createUser } from "../interface/user.types";
 import userService from "../services/user.service";
+import { hashPassword } from "../utilies/hashPassword";
 
 class UserManager {
   async createUser(url: string, user: createUser): Promise<any> {
     try {
-      const userdata = await userService.create(url, user);
-      if (!userdata) {
+      const hashed = await hashPassword(user.password);
+      user.password = hashed;
+      console.log(user);
+      const userData = await userService.create(url, user);
+      if (!userData) {
         throw new HTTPException(401, {
           message: `UserManager => User Data Not Found`,
         });
       }
-      return userdata;
+      return userData;
     } catch (error) {
       if (error instanceof HTTPException) {
         const statusCode = error.status;
