@@ -9,7 +9,6 @@ class UserManager {
     try {
       const hashed = await hashPassword(user.password);
       user.password = hashed;
-      console.log(user);
       const userData = await userService.create(url, user);
       if (!userData) {
         throw new HTTPException(401, {
