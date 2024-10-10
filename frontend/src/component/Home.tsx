@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Content from "./Content";
 
-export default function Layout() {
+export default function Home() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   useEffect(() => {
