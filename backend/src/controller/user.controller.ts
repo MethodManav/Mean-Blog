@@ -4,6 +4,7 @@ import { sign } from "hono/jwt";
 import userManager from "../manager/user.manager";
 import { SendResponse } from "../utilies/sendResponse";
 import { HTTPException } from "hono/http-exception";
+import { verifyPassword } from "../utilies/verifyPassword";
 
 class UserController {
   async signUp(c: Context) {
@@ -20,17 +21,10 @@ class UserController {
       }
       const userCreate = await userManager.createUser(DATABASE_URL, body);
       if (userCreate) {
-        const token = await sign(
-          {
-            id: userCreate.id,
-          },
-          JWT
-        );
         return c.json(
           {
             message: "User Created Successfully",
             success: true,
-            token: token,
           },
           201
         );
@@ -58,9 +52,23 @@ class UserController {
           message: "User Does Not  Exists",
         });
       }
+      const checkPassword = await verifyPassword(body.password, user.password);
+      if (!checkPassword) {
+        return SendResponse(c, 404, {
+          success: false,
+          data: {},
+          message: "Incorrect Password",
+        });
+      }
+      const token = await sign(
+        {
+          id: user.id,
+        },
+        JWT
+      );
       return SendResponse(c, 201, {
         success: true,
-        data: user,
+        data: token,
         message: `User Signin Successfully`,
       });
     } catch (error) {
