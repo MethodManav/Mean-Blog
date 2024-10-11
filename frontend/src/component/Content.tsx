@@ -1,69 +1,10 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Bookmark } from "lucide-react";
 import { useState, useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ThumbsUp, MessageSquare, Bookmark } from "lucide-react";
 
-function ArticleCard({ isLoading }: { isLoading: boolean }) {
-  if (isLoading) {
-    return (
-      <Card className="mb-4 bg-white dark:bg-gray-800">
-        <CardHeader>
-          <Skeleton className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700" />
-        </CardHeader>
-        <CardContent>
-          <Skeleton className="h-4 w-full mb-2 bg-gray-200 dark:bg-gray-700" />
-          <Skeleton className="h-4 w-full mb-2 bg-gray-200 dark:bg-gray-700" />
-          <Skeleton className="h-4 w-2/3 bg-gray-200 dark:bg-gray-700" />
-        </CardContent>
-        <CardFooter>
-          <Skeleton className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700" />
-          <Skeleton className="h-4 w-24 ml-2 bg-gray-200 dark:bg-gray-700" />
-        </CardFooter>
-      </Card>
-    );
-  }
-
-  return (
-    <Card className="mb-4 bg-white dark:bg-gray-800">
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-          Article Title
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-gray-600 dark:text-gray-300">
-          This is a brief description of the article. It provides a summary of
-          the content and entices the reader to click and read more.
-        </p>
-      </CardContent>
-      <CardFooter className="flex justify-between items-center">
-        <div className="flex items-center space-x-4">
-          <button className="flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
-            <ThumbsUp className="h-5 w-5 mr-1" />
-            <span>123</span>
-          </button>
-          <button className="flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
-            <MessageSquare className="h-5 w-5 mr-1" />
-            <span>45</span>
-          </button>
-        </div>
-        <button className="text-gray-500 dark:text-gray-400 hover:text-yellow-500 dark:hover:text-yellow-400">
-          <Bookmark className="h-5 w-5" />
-        </button>
-      </CardFooter>
-    </Card>
-  );
-}
-
-export default function Content({ isDarkTheme }: { isDarkTheme: boolean }) {
+export default function Content() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -76,13 +17,38 @@ export default function Content({ isDarkTheme }: { isDarkTheme: boolean }) {
   }, []);
 
   return (
-    <div className="flex-1 p-6 overflow-auto bg-gray-100 dark:bg-gray-900">
-      <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-        My Feed
-      </h1>
-      {[...Array(5)].map((_, index) => (
-        <ArticleCard key={index} isLoading={isLoading} />
-      ))}
-    </div>
+    <main className="flex-1 p-6 overflow-y-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Article Card (repeated for demonstration) */}
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+          <div key={i} className="bg-gray-800 rounded-lg overflow-hidden">
+            <div className="p-4">
+              <h3 className="text-lg font-semibold mb-2">Article Title {i}</h3>
+              <p className="text-sm text-gray-400 mb-4">Today • 2m read time</p>
+              <div className="aspect-w-16 aspect-h-9 mb-4">
+                <img
+                  src={`/placeholder.svg?height=200&width=400&text=Article+Image+${i}`}
+                  alt={`Article ${i}`}
+                  className="object-cover rounded"
+                />
+              </div>
+              <div className="flex justify-between items-center text-gray-400">
+                <div className="flex space-x-2">
+                  <Button variant="ghost" size="sm">
+                    👍 {Math.floor(Math.random() * 100)}
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    💬 {Math.floor(Math.random() * 20)}
+                  </Button>
+                </div>
+                <Button variant="ghost" size="sm">
+                  <Bookmark size={16} />
+                </Button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </main>
   );
 }
