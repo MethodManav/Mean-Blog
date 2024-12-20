@@ -2,17 +2,11 @@ import {
   Home,
   MessageSquare,
   MessageCircle,
-  FileText,
-  BarChart2,
-  Clock,
   Bookmark,
-  Award,
   Globe,
   Hash,
   Compass,
   Link2,
-  PlusSquare,
-  Users,
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -26,13 +20,15 @@ export default function Sidebar() {
               <Home size={20} />
               <span>My feed</span>
             </li>
-            <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
+
+            {/* Future Feature To Add */}
+            {/* <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
               <PlusSquare size={20} />
               <span>Custom feed</span>
-            </li>
+            </li> */}
           </ul>
         </div>
-        <div>
+        {/* <div>
           <h2 className="text-gray-400 text-sm font-semibold mb-2">Squads</h2>
           <ul className="space-y-2">
             <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
@@ -44,7 +40,7 @@ export default function Sidebar() {
               <span>New Squad</span>
             </li>
           </ul>
-        </div>
+        </div> */}
         <div>
           <h2 className="text-gray-400 text-sm font-semibold mb-2">Discover</h2>
           <ul className="space-y-2">
@@ -64,10 +60,10 @@ export default function Sidebar() {
               <Globe size={20} />
               <span>Sources</span>
             </li>
-            <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
+            {/* <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
               <Award size={20} />
               <span>Leaderboard</span>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div>
@@ -81,22 +77,22 @@ export default function Sidebar() {
               <Bookmark size={20} />
               <span>Bookmarks</span>
             </li>
-            <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
+            {/* <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
               <Clock size={20} />
               <span>History</span>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div>
           <ul className="space-y-2">
-            <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
+            {/* <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
               <FileText size={20} />
               <span>Docs</span>
-            </li>
-            <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
-              <BarChart2 size={20} />
-              <span>Changelog</span>
-            </li>
+            </li> */}
+            {/* <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
+                <BarChart2 size={20} />
+                <span>Changelog</span>
+              </li> */}
             <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
               <MessageCircle size={20} />
               <span>Feedback</span>

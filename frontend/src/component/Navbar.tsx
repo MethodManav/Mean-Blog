@@ -6,7 +6,7 @@ export const Navbar = () => {
   return (
     <header className="flex items-center justify-between p-4 border-b border-gray-800">
       <div className="flex items-center space-x-4">
-        <h1 className="text-xl font-bold">Meme Dev</h1>
+        <h1 className="text-xl font-bold">Mean Dev</h1>
         <div className="relative left-20">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <Input
