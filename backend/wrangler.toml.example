@@ -5,3 +5,8 @@ compatibility_flags = [ "nodejs_compat" ]
 [vars]
 DATABASE_URL="CONNECTION POOL URL"
 JWT=JWT_SECRET
+
+S3_REGION=
+AWS_ACCESS_KEY_ID=""
+AWS_SECRET_ACCESS_KEY=
+BUCKET_NAME=

@@ -1,20 +1,21 @@
 import { client } from "../database/prismaClient";
-import { createBlogs, UpdateBlog } from "../interface/blog.types";
+import { createBlogsDTO, UpdateBlogDTO } from "../interface/blog.types";
 
 class BlogService {
-  async create(url: string, blogData: createBlogs): Promise<any> {
+  async create(url: string, blogData: createBlogsDTO): Promise<any> {
     const prismaClient = client(url);
     const blogCreate = await prismaClient.blogs.create({
       data: {
         authorId: blogData.authorId,
         title: blogData.title,
         content: blogData.content,
+        images: blogData.images,
         published: blogData.published,
       },
     });
     return blogCreate;
   }
-  async updateByID(url: string, blogData: UpdateBlog, id: number) {
+  async updateByID(url: string, blogData: UpdateBlogDTO, id: number) {
     const prismaClient = client(url);
     try {
       const blog = await prismaClient.blogs.update({

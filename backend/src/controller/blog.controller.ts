@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { createBlogs, UpdateBlog } from "../interface/blog.types";
+import { createBlogsDTO, UpdateBlogDTO } from "../interface/blog.types";
 import blogService from "../services/blog.service";
 import { SendResponse } from "../utilies/sendResponse";
 import { HTTPException } from "hono/http-exception";
@@ -7,10 +7,16 @@ import { HTTPException } from "hono/http-exception";
 class BlogController {
   async createBlog(c: Context) {
     const { DATABASE_URL } = c.env;
-    let body: createBlogs = {
-      ...(await c.req.json()),
+    const responseBody = await c.req.formData();
+
+    let body: createBlogsDTO = {
+      title: responseBody.get("title") as string,
+      content: responseBody.get("content") as string,
+      published: false,
       authorId: c.get("userId")?.id,
+      images: c.get("imageKey"),
     };
+
     try {
       const blog = await blogService.create(DATABASE_URL, body);
       if (blog) {
@@ -26,6 +32,7 @@ class BlogController {
         const errorMessage = error.message || "Internal Server Error";
         throw new HTTPException(statusCode, { message: errorMessage });
       } else {
+        console.log(error);
         throw new HTTPException(500, { message: "Unknown error occurred" });
       }
     }
@@ -33,7 +40,7 @@ class BlogController {
 
   async updateBlog(c: Context) {
     const { DATABASE_URL } = c.env;
-    const body: UpdateBlog = await c.req.json();
+    const body: UpdateBlogDTO = await c.req.json();
     const userId = c.get("userId");
     try {
       const blog = await blogService.updateByID(

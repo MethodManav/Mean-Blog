@@ -22,10 +22,11 @@ model User {
 }
 
 model Blogs {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   authorId  Int
   title     String
   content   String
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
+  images    String[]
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id])
 }
