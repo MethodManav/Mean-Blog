@@ -1,26 +1,4 @@
 import React from "react";
-import {
-  Search,
-  Bell,
-  PlusCircle,
-  ChevronDown,
-  Home,
-  PlusSquare,
-  Users,
-  Compass,
-  MessageSquare,
-  Hash,
-  Globe,
-  Award,
-  Link,
-  Bookmark,
-  Clock,
-  FileText,
-  BarChart2,
-  MessageCircle,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Navbar } from "./Navbar";
 import Sidebar from "./Sidebar";
 import Content from "./Content";

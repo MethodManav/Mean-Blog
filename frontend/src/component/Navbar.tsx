@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Bell, ChevronDown, Search } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   return (
@@ -17,9 +18,11 @@ export const Navbar = () => {
         </div>
       </div>
       <div className="flex items-center space-x-4">
-        <Button variant="outline" className="bg-white text-black">
-          New post
-        </Button>
+        <Link to={"/create"}>
+          <Button variant="outline" className="bg-white text-black">
+            New post
+          </Button>
+        </Link>
         <Bell className="text-gray-400" />
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-purple-500 rounded-full"></div>

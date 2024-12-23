@@ -11,7 +11,7 @@ import {
 
 export default function Sidebar() {
   return (
-    <nav className="w-64 p-4 bg-gray-800 overflow-y-auto">
+    <nav className="w-64 p-4 bg-gray-800 overflow-y-auto h-screen">
       <div className="space-y-6">
         <div>
           <h2 className="text-gray-400 text-sm font-semibold mb-2">Feeds</h2>
