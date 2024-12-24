@@ -7,6 +7,7 @@ import {
   Hash,
   Compass,
   Link2,
+  BookOpen,
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -19,6 +20,10 @@ export default function Sidebar() {
             <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
               <Home size={20} />
               <span>My feed</span>
+            </li>
+            <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
+              <BookOpen size={20} />
+              <span>Subjects</span>
             </li>
 
             {/* Future Feature To Add */}
@@ -71,7 +76,7 @@ export default function Sidebar() {
           <ul className="space-y-2">
             <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
               <Link2 size={20} />
-              <span>Submit a link</span>
+              <span>Submit PDF</span>
             </li>
             <li className="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded">
               <Bookmark size={20} />
