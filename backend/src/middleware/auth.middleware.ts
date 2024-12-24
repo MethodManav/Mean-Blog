@@ -1,5 +1,6 @@
 import { Context, Next } from "hono";
 import { verify } from "hono/jwt";
+import { SendResponse } from "../utilies/sendResponse";
 
 class AuthMiddleware {
   async authUser(c: Context, next: Next) {
@@ -29,6 +30,7 @@ class AuthMiddleware {
         return c.json({ message: "Invalid Token Payload" }, 403);
       }
       c.set("userId", user);
+      c.set("role", user.role);
       await next();
     } catch (error: any) {
       console.error("Authentication Error:", error);
@@ -40,6 +42,18 @@ class AuthMiddleware {
         500
       );
     }
+  }
+  async isAdmin(c: Context, next: Next) {
+    const getRole = c.get("role");
+    console.log(getRole);
+    if (c.get("role") != "admin") {
+      return SendResponse(c, 400, {
+        success: false,
+        data: {},
+        message: "Forbidden ",
+      });
+    }
+    await next();
   }
 }
 

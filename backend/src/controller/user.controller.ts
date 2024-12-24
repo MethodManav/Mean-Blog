@@ -21,13 +21,11 @@ class UserController {
       }
       const userCreate = await userManager.createUser(DATABASE_URL, body);
       if (userCreate) {
-        return c.json(
-          {
-            message: "User Created Successfully",
-            success: true,
-          },
-          201
-        );
+        return SendResponse(c, 201, {
+          success: true,
+          data: {},
+          message: "User Created Successfully",
+        });
       }
     } catch (error) {
       if (error instanceof HTTPException) {
@@ -63,6 +61,7 @@ class UserController {
       const token = await sign(
         {
           id: user.id,
+          role: user.role,
         },
         JWT
       );

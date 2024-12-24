@@ -1,4 +1,4 @@
-import { Context, Hono } from "hono";
+import { Hono } from "hono";
 import { Bindings, Variables } from "../interface/Types";
 import authMiddleware from "../middleware/auth.middleware";
 import blogController from "../controller/blog.controller";
