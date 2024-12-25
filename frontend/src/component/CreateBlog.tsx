@@ -3,8 +3,6 @@ import {
   BoldItalicUnderlineToggles,
   headingsPlugin,
   imagePlugin,
-  InsertImage,
-  InsertTable,
   linkDialogPlugin,
   linkPlugin,
   listsPlugin,
@@ -12,7 +10,6 @@ import {
   tablePlugin,
   toolbarPlugin,
 } from "@mdxeditor/editor";
-import { Navbar } from "./Navbar";
 import Sidebar from "./Sidebar";
 
 export const CreateBlog = () => {

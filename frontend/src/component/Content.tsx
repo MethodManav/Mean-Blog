@@ -5,7 +5,7 @@ import { Bookmark } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function Content() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Simulate loading delay
