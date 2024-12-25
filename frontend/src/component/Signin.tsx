@@ -14,12 +14,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+// import axios from "axios";
 
 export default function Signin() {
   const [showPassword, setShowPassword] = useState(false);
+  // const [email, setEmail] = useState<string>("");
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
-
+  // const handleSubmit = () => {
+  //   try {
+  //     const response = await axios.post("")
+  //   } catch (error) {}
+  // };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
       <Card className="w-full max-w-md">
@@ -39,7 +45,8 @@ export default function Signin() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder="Manav@example.com"
+                  value={"Manavbehera123@gmail.com"}
                   required
                 />
               </div>
@@ -50,6 +57,7 @@ export default function Signin() {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
+                    value={"Ruk Ja  Bhai Dev hai yeh"}
                     required
                   />
                   <Button
@@ -91,9 +99,11 @@ export default function Signin() {
                   </Link>
                 </div>
               </div>
-              <Button className="w-full" type="submit">
-                Sign In
-              </Button>
+              <Link to={"/home"}>
+                <Button className="w-full" type="submit">
+                  Sign In
+                </Button>
+              </Link>
             </div>
           </form>
         </CardContent>
