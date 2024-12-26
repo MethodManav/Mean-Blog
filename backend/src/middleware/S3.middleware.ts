@@ -4,7 +4,7 @@ import { Context, Next } from "hono";
 class S3Upload {
   async ImageUpload(c: Context, next: Next) {
     const formData = await c.req.formData();
-    const files = formData.getAll("image");
+    const files = formData.getAll("content");
 
     if (files.length === 0) {
       return c.json({ error: "At least one file is required" }, 400);
