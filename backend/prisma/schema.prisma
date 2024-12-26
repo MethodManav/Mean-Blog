@@ -36,21 +36,31 @@ model Blogs {
 }
 
 model Subject {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   name        String
   description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   Note        Note[]
+  Chapters    Chapters[]
+}
+
+model Chapters {
+  id        Int      @id @default(autoincrement())
+  name      String
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+  subjectId Int
+  createdAt DateTime @default(now())
+  Note      Note[]
 }
 
 model Note {
   id        Int       @id @default(autoincrement())
   title     String
-  content   String?
-  fileUrl   String?
   subject   Subject   @relation(fields: [subjectId], references: [id])
   subjectId Int
+  chapter   Chapters  @relation(fields: [chapterId], references: [id])
+  chapterId Int
   user      User      @relation(fields: [userId], references: [id])
   userId    Int
   comments  Comment[]

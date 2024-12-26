@@ -14,7 +14,7 @@ class SubjectController {
       }
       return SendResponse(c, 201, {
         success: true,
-        data: {},
+        data: dbSubject,
         message: "Subject Created Successfully",
       });
     } catch (error) {
