@@ -1,5 +1,5 @@
 export interface Chapter {
-  id: string;
+  id: number;
   title: string;
   pdf?: string;
   notes?: string;

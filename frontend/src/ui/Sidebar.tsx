@@ -1,22 +1,23 @@
-import { useState } from "react";
 import {
-  Home,
-  MessageSquare,
-  MessageCircle,
   Bookmark,
+  BookOpen,
+  Compass,
   Globe,
   Hash,
-  Compass,
-  Link2,
-  BookOpen,
   Heart,
+  Home,
+  Link2,
+  MessageCircle,
+  MessageSquare,
 } from "lucide-react";
+import Subject from "./Subject";
+import { useState } from "react";
 
 export default function Sidebar() {
   const [activeTab, setActiveTab] = useState("my-feed");
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen w-screen">
       {/* Sidebar */}
       <nav className="w-64 p-4 bg-gray-800 overflow-y-auto">
         <div className="space-y-6">
@@ -137,11 +138,13 @@ export default function Sidebar() {
       </nav>
 
       {/* Content Area */}
-      <main className="flex-1 p-4 bg-gray-900 text-white">
-        {activeTab === "my-feed" && <div>Welcome to My Feed</div>}
-        {activeTab === "subjects" && <div>Welcome to My Subject</div>}
-        {activeTab === "likes" && <div>Likes</div>}
-        {activeTab === "explore" && <div>Explore Content</div>}
+      <main className="flex-1 flex flex-col bg-gray-900 overflow-y-auto">
+        {activeTab === "my-feed" && (
+          <div className="p-6">Welcome to My Feed</div>
+        )}
+        {activeTab === "subjects" && <Subject />}
+        {activeTab === "likes" && <div className="p-6">Likes</div>}
+        {activeTab === "explore" && <div className="p-6">Explore Content</div>}
         {/* Add content for other tabs here */}
       </main>
     </div>
