@@ -1,7 +1,4 @@
-"use client";
-
-import { useState } from "react";
-import SubjectCard from "./subject-card";
+import SubjectCard from "./SubjectCard";
 
 const sampleSubjects = [
   {
@@ -51,23 +48,16 @@ const sampleSubjects = [
   },
 ];
 
-export default function Page() {
-  const [expandedSubject, setExpandedSubject] = useState<number | null>(null);
-
-  const toggleSubject = (id: number) => {
-    setExpandedSubject((prev) => (prev === id ? null : id));
-  };
+export default function Subject() {
 
   return (
     <div className="min-h-screen p-8">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {sampleSubjects.map((subject) => (
             <SubjectCard
               key={subject.id}
-              {...subject}
-              isExpanded={expandedSubject === subject.id}
-              toggleExpanded={() => toggleSubject(subject.id)}
+              subjectData={subject}
             />
           ))}
         </div>

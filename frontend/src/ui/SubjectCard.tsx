@@ -1,71 +1,81 @@
-"use client";
-
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, FileText, PenLine, FileQuestion } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 
-interface Chapter {
+type Chapter = {
   id: number;
   title: string;
-  pdf?: string;
+  pdf: string;
   notes?: string;
   assessment?: string;
-}
+};
 
-interface SubjectCardProps {
+type Course = {
   id: number;
   title: string;
   image: string;
   chapters: Chapter[];
-  isExpanded: boolean;
-  toggleExpanded: () => void;
+};
+
+interface SubjectCardProps {
+  subjectData: Course
 }
 
 export default function SubjectCard({
-  title,
-  image,
-  chapters,
-  isExpanded,
-  toggleExpanded,
+  subjectData
 }: SubjectCardProps) {
+
+  const [isExpanded, setIsExpanded] = useState(false)
+  console.log("isExpanded", isExpanded);
+
+  const toggleExpanded = () => {
+    setIsExpanded((prev) => !prev)
+  }
+
   return (
-    <Card className="w-full max-w-sm overflow-hidden transition-shadow hover:shadow-lg">
-      <motion.div
-        initial={{ scale: 1 }}
-        whileHover={{ scale: 1.02 }}
-        transition={{ duration: 0.2 }}
-      >
-        <div className="relative aspect-[4/3] overflow-hidden">
-          <img
-            src={image}
-            alt={title}
-            className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-          <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">
-            {title}
-          </h3>
-        </div>
+    <div>
+      <Card className={`w-full max-w-sm overflow-hidden transition-shadow hover:shadow-lg ${isExpanded && "rounded-b-none"}`}>
+        <motion.div
+          initial={{ scale: 1 }}
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
+        >
+          <div className="relative aspect-[4/3] overflow-hidden">
+            <img
+              src={subjectData.image}
+              alt={subjectData.title}
+              className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">
+              {isExpanded ? "" : subjectData.title}
+            </h3>
+          </div>
 
-        <CardContent className="p-4">
-          <Button
-            variant="ghost"
-            className="w-full justify-between"
-            onClick={toggleExpanded}
-          >
-            <span>View Chapters</span>
-            <motion.div
-              animate={{ rotate: isExpanded ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
+          <CardContent className="p-4">
+            <Button
+              variant="ghost"
+              className="w-full justify-between"
+              onClick={toggleExpanded}
             >
-              <ChevronDown className="h-4 w-4" />
-            </motion.div>
-          </Button>
-
-          <AnimatePresence>
-            {isExpanded && (
+              <span>View Chapters</span>
+              <motion.div
+                animate={{ rotate: isExpanded ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ChevronDown className="h-4 w-4" />
+              </motion.div>
+            </Button>
+          </CardContent>
+        </motion.div>
+      </Card>
+      {isExpanded && (
+        <Card className="rounded-t-none">
+          <CardContent>
+            <AnimatePresence>
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
@@ -74,7 +84,7 @@ export default function SubjectCard({
                 className="overflow-hidden"
               >
                 <div className="pt-4 space-y-4">
-                  {chapters.map((chapter) => (
+                  {subjectData.chapters.map((chapter) => (
                     <motion.div
                       key={chapter.id}
                       initial={{ x: -20, opacity: 0 }}
@@ -116,10 +126,10 @@ export default function SubjectCard({
                   ))}
                 </div>
               </motion.div>
-            )}
-          </AnimatePresence>
-        </CardContent>
-      </motion.div>
-    </Card>
+            </AnimatePresence>
+          </CardContent>
+        </Card>
+      )}
+    </div>
   );
 }
