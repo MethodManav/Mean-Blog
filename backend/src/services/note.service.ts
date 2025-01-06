@@ -7,7 +7,6 @@ class noteService {
     return await prismaClient.note.create({
       data: {
         title: notes.title,
-        subjectId: notes.subjectId,
         userId: notes.userId,
         chapterId: notes.chapterId,
         content: notes.content,

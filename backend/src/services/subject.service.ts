@@ -13,7 +13,15 @@ class SubjectService {
   }
   async getAll(url: string) {
     const prismaClient = client(url);
-    return await prismaClient.subject.findMany();
+    return await prismaClient.subject.findMany({
+      include: {
+        Chapters: {
+          include: {
+            Note: true,
+          },
+        },
+      },
+    });
   }
 }
 

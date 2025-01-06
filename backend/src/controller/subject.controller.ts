@@ -34,7 +34,7 @@ class SubjectController {
       if (!allSubject) {
         throw new Error("Something Went Wrong");
       }
-      return SendResponse(c, 201, {
+      return SendResponse(c, 200, {
         success: true,
         data: allSubject,
         message: "Subject Retrieve Successfully",
