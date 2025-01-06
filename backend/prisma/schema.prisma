@@ -41,7 +41,6 @@ model Subject {
   description String?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  Note        Note[]
   Chapters    Chapters[]
 }
 
@@ -57,8 +56,6 @@ model Chapters {
 model Note {
   id        Int       @id @default(autoincrement())
   title     String
-  subject   Subject   @relation(fields: [subjectId], references: [id])
-  subjectId Int
   chapter   Chapters  @relation(fields: [chapterId], references: [id])
   chapterId Int
   user      User      @relation(fields: [userId], references: [id])
