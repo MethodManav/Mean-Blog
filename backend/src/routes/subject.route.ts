@@ -11,9 +11,5 @@ subjectRouter.post(
   authMiddleware.isAdmin,
   subjectController.createSubject
 );
-subjectRouter.get(
-  "/getAll",
-  authMiddleware.authUser,
-  subjectController.getAllSubjectDetail
-);
+subjectRouter.get("/getAll", subjectController.getAllSubjectDetail);
 export { subjectRouter };
