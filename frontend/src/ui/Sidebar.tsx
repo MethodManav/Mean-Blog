@@ -14,7 +14,7 @@ import Subject from "./Subject";
 import { useState } from "react";
 
 export default function Sidebar() {
-  const [activeTab, setActiveTab] = useState("my-feed");
+  const [activeTab, setActiveTab] = useState("subjects");
 
   return (
     <div className="flex h-screen w-screen">
@@ -24,15 +24,6 @@ export default function Sidebar() {
           <div>
             <h2 className="text-gray-400 text-sm font-semibold mb-2">Feeds</h2>
             <ul className="space-y-2">
-              <li
-                className={`flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded ${
-                  activeTab === "my-feed" && "bg-gray-700"
-                }`}
-                onClick={() => setActiveTab("my-feed")}
-              >
-                <Home size={20} />
-                <span>My feed</span>
-              </li>
               <li
                 className={`flex items-center space-x-3 text-gray-300 hover:bg-gray-700 p-2 rounded ${
                   activeTab === "subjects" && "bg-gray-700"

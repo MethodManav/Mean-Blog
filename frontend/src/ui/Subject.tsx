@@ -1,65 +1,41 @@
+import { useEffect, useState } from "react";
 import SubjectCard from "./SubjectCard";
-
-const sampleSubjects = [
-  {
-    id: 1,
-    title: "Mathematics",
-    image: "/placeholder.svg?height=300&width=400",
-    chapters: [
-      {
-        id: 1,
-        title: "Algebra Fundamentals",
-        pdf: "/path/to/pdf",
-        notes: "/path/to/notes",
-        assessment: "/path/to/assessment",
-      },
-      {
-        id: 2,
-        title: "Linear Equations",
-        pdf: "/path/to/pdf",
-        notes: "/path/to/notes",
-      },
-      {
-        id: 3,
-        title: "Quadratic Functions",
-        pdf: "/path/to/pdf",
-        assessment: "/path/to/assessment",
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "Physics",
-    image: "/placeholder.svg?height=300&width=400",
-    chapters: [
-      {
-        id: 1,
-        title: "Mechanics",
-        pdf: "/path/to/pdf",
-        notes: "/path/to/notes",
-      },
-      {
-        id: 2,
-        title: "Thermodynamics",
-        pdf: "/path/to/pdf",
-        assessment: "/path/to/assessment",
-      },
-    ],
-  },
-];
+import axios from "axios";
+import { subjectDetails } from "@/types/subject";
 
 export default function Subject() {
+  const [subjectData, setSubjectData] = useState<subjectDetails[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // Track loading state
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8787/api/v1/subject/getAll"
+        );
+        setSubjectData(response.data.data); // Update state with the fetched data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+  if (isLoading) {
+    return <p>Loading subjects...</p>;
+  }
+  console.log(subjectData, "hii");
   return (
-    <div className="min-h-screen p-8">
+    <div className="h-screen p-8">
       <div className="max-w-5xl mx-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sampleSubjects.map((subject) => (
-            <SubjectCard
-              key={subject.id}
-              subjectData={subject}
-            />
-          ))}
+          {subjectData.length > 0 ? (
+            subjectData.map((subject) => <SubjectCard subjectData={subject} />)
+          ) : (
+            <p>No subjects available.</p>
+          )}
         </div>
       </div>
     </div>
