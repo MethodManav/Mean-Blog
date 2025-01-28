@@ -6,21 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { subjectDetails } from "@/types/subject";
 
-type Chapter = {
-  id: number;
-  title: string;
-  pdf: string;
-  notes?: string;
-  assessment?: string;
-};
-
-type Course = {
-  id: number;
-  name: string;
-  image: string;
-  chapters: Chapter[];
-};
-
 interface SubjectCardProps {
   subjectData: subjectDetails;
 }

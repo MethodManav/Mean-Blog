@@ -5,7 +5,6 @@ import {
   Globe,
   Hash,
   Heart,
-  Home,
   Link2,
   MessageCircle,
   MessageSquare,
