@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import { subjectDetails } from "@/types/subject";
 
 type Chapter = {
   id: number;
@@ -15,43 +16,38 @@ type Chapter = {
 
 type Course = {
   id: number;
-  title: string;
+  name: string;
   image: string;
   chapters: Chapter[];
 };
 
 interface SubjectCardProps {
-  subjectData: Course
+  subjectData: subjectDetails;
 }
 
-export default function SubjectCard({
-  subjectData
-}: SubjectCardProps) {
-
-  const [isExpanded, setIsExpanded] = useState(false)
-  console.log("isExpanded", isExpanded);
+export default function SubjectCard({ subjectData }: SubjectCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpanded = () => {
-    setIsExpanded((prev) => !prev)
-  }
+    setIsExpanded((prev) => !prev);
+  };
 
   return (
     <div>
-      <Card className={`w-full max-w-sm overflow-hidden transition-shadow hover:shadow-lg ${isExpanded && "rounded-b-none"}`}>
+      <Card
+        className={`w-full max-w-sm overflow-hidden transition-shadow hover:shadow-lg ${
+          isExpanded && "rounded-b-none"
+        }`}
+      >
         <motion.div
           initial={{ scale: 1 }}
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
         >
           <div className="relative aspect-[4/3] overflow-hidden">
-            <img
-              src={subjectData.image}
-              alt={subjectData.title}
-              className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
-            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">
-              {isExpanded ? "" : subjectData.title}
+              {isExpanded ? "" : subjectData.name}
             </h3>
           </div>
 
@@ -84,7 +80,7 @@ export default function SubjectCard({
                 className="overflow-hidden"
               >
                 <div className="pt-4 space-y-4">
-                  {subjectData.chapters.map((chapter) => (
+                  {subjectData.Chapters.map((chapter) => (
                     <motion.div
                       key={chapter.id}
                       initial={{ x: -20, opacity: 0 }}
@@ -92,9 +88,9 @@ export default function SubjectCard({
                       transition={{ duration: 0.3 }}
                       className="p-4 rounded-lg bg-muted"
                     >
-                      <h4 className="font-medium mb-3">{chapter.title}</h4>
+                      <h4 className="font-medium mb-3">{chapter.name}</h4>
                       <div className="flex flex-wrap gap-2">
-                        {chapter.pdf && (
+                        {chapter.notes && (
                           <Badge
                             variant="secondary"
                             className="flex items-center gap-1"

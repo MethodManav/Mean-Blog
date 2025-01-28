@@ -14,6 +14,9 @@ class SubjectService {
   async getAll(url: string) {
     const prismaClient = client(url);
     return await prismaClient.subject.findMany({
+      orderBy: {
+        createdAt: "asc",
+      },
       include: {
         Chapters: {
           include: {
