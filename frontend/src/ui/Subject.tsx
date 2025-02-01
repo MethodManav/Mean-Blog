@@ -22,15 +22,19 @@ export default function Subject() {
 
     fetchData();
   }, []);
+
   if (isLoading) {
     return <p>Loading subjects...</p>;
   }
+
   return (
-    <div className="h-screen p-8">
-      <div className="max-w-5xl mx-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="h-screen px-4 sm:px-8 py-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {subjectData.length > 0 ? (
-            subjectData.map((subject) => <SubjectCard subjectData={subject} />)
+            subjectData.map((subject) => (
+              <SubjectCard key={subject.id} subjectData={subject} />
+            ))
           ) : (
             <p>No subjects available.</p>
           )}
