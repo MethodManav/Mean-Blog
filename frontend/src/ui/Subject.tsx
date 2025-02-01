@@ -6,13 +6,12 @@ import { subjectDetails } from "@/types/subject";
 export default function Subject() {
   const [subjectData, setSubjectData] = useState<subjectDetails[]>([]);
   const [isLoading, setIsLoading] = useState(true); // Track loading state
+  const serverUrl = import.meta.env.VITE_SERVER;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8787/api/v1/subject/getAll"
-        );
+        const response = await axios.get(`${serverUrl}api/v1/subject/getAll`);
         setSubjectData(response.data.data); // Update state with the fetched data
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -26,7 +25,6 @@ export default function Subject() {
   if (isLoading) {
     return <p>Loading subjects...</p>;
   }
-  console.log(subjectData, "hii");
   return (
     <div className="h-screen p-8">
       <div className="max-w-5xl mx-16">
