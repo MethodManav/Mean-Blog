@@ -11,7 +11,7 @@ export default function Subject() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${serverUrl}api/v1/subject/getAll`);
+        const response = await axios.get(`${serverUrl}subject/getAll`);
         setSubjectData(response.data.data); // Update state with the fetched data
       } catch (error) {
         console.error("Error fetching data:", error);

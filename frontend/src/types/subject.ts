@@ -3,7 +3,7 @@ export interface Chapter {
   name: string;
   title: string;
   pdf?: string;
-  notes?: string;
+  Note: Notes[];
   assessment?: string;
 }
 
@@ -19,4 +19,8 @@ export interface subjectDetails {
   name: string;
   description: string;
   Chapters: Chapter[];
+}
+
+export interface Notes {
+  content: string;
 }

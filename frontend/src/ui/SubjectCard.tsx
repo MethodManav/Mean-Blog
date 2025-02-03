@@ -2,9 +2,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, FileText, PenLine, FileQuestion } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import { subjectDetails } from "@/types/subject";
+import { Notes, subjectDetails } from "@/types/subject";
+import { Badge } from "@/components/ui/badge";
 
 interface SubjectCardProps {
   subjectData: subjectDetails;
@@ -17,10 +17,19 @@ export default function SubjectCard({ subjectData }: SubjectCardProps) {
     setIsExpanded((prev) => !prev);
   };
 
+  const handlePDFOpen = async (pdfKey: string) => {
+    try {
+      const url = `${import.meta.env.VITE_SERVER}notes/${pdfKey.split("/")[1]}`;
+      window.open(url, "_blank");
+    } catch (error) {
+      console.error("Error fetching pre-signed URL:", error);
+    }
+  };
+
   return (
     <div>
       <Card
-        className={`w-full max-w-sm overflow-hidden transition-shadow hover:shadow-lg ${
+        className={`w-full  max-w-sm overflow-hidden transition-shadow hover:shadow-lg ${
           isExpanded && "rounded-b-none"
         }`}
       >
@@ -32,7 +41,7 @@ export default function SubjectCard({ subjectData }: SubjectCardProps) {
           <div className="relative aspect-[4/3] overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">
-              {isExpanded ? "" : subjectData.name}
+              {subjectData.name}
             </h3>
           </div>
 
@@ -60,7 +69,7 @@ export default function SubjectCard({ subjectData }: SubjectCardProps) {
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
+                exit={{ height: 1, opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden"
               >
@@ -75,33 +84,32 @@ export default function SubjectCard({ subjectData }: SubjectCardProps) {
                     >
                       <h4 className="font-medium mb-3">{chapter.name}</h4>
                       <div className="flex flex-wrap gap-2">
-                        {chapter.notes && (
-                          <Badge
-                            variant="secondary"
-                            className="flex items-center gap-1"
-                          >
-                            <FileText className="h-3 w-3" />
-                            PDF
-                          </Badge>
-                        )}
-                        {chapter.notes && (
-                          <Badge
-                            variant="secondary"
-                            className="flex items-center gap-1"
-                          >
-                            <PenLine className="h-3 w-3" />
-                            Notes
-                          </Badge>
-                        )}
-                        {chapter.assessment && (
-                          <Badge
-                            variant="secondary"
-                            className="flex items-center gap-1"
-                          >
-                            <FileQuestion className="h-3 w-3" />
-                            Assessment
-                          </Badge>
-                        )}
+                        {chapter.Note.map((pdf: Notes) => (
+                          <>
+                            <Badge
+                              variant="secondary"
+                              className="flex items-center gap-1"
+                              onClick={() => handlePDFOpen(pdf.content)}
+                            >
+                              <FileText className="h-3 w-3" />
+                              <button>{pdf.content.split("-").pop()}</button>
+                            </Badge>
+                            <Badge
+                              variant="secondary"
+                              className="flex items-center gap-1"
+                            >
+                              <PenLine className="h-3 w-3" />
+                              Notes
+                            </Badge>
+                            <Badge
+                              variant="secondary"
+                              className="flex items-center gap-1"
+                            >
+                              <FileQuestion className="h-3 w-3" />
+                              Assessment
+                            </Badge>
+                          </>
+                        ))}
                       </div>
                     </motion.div>
                   ))}
